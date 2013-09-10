@@ -3,8 +3,8 @@
   <li ng-repeat="(id, post) in posts">
     <a href="{{post.url}}">{{post.name}}</a>
     <span class="url"><small>({{post.url | shortURL}})</small></span>
-    [<a href="#/edit/{{id}}">edit</a>]
-    [<a href="#/remove/{{id}}">remove</a>]
+    <a href="#/edit/{{id}}" class="btn btn-primary btn-xs">edit</a>
+    <a href="#/remove/{{id}}" class="btn btn-danger btn-xs">remove</a>
   </li>
 </ul>
 <a ng-href="#/add">Add a New Article</a>
