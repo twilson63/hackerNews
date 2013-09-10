@@ -1,0 +1,10 @@
+<p ng-show="posts.length == 0">There are no posts here!</p>
+<ul>
+  <li ng-repeat="(id, post) in posts">
+    <a href="{{post.url}}">{{post.name}}</a>
+    <span class="url"><small>({{post.url | shortURL}})</small></span>
+    [<a href="#/edit/{{id}}">edit</a>]
+    [<a href="#/remove/{{id}}">remove</a>]
+  </li>
+</ul>
+<a ng-href="#/add">Add a New Article</a>
