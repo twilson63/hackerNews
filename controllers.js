@@ -1,12 +1,8 @@
 /* Controllers */
 
 hackerNews.controller('AppCtrl',
-  function AppCtrl ($scope, angularFire) {
-      
-      var ref = new Firebase('https://xyclos.firebaseio.com/hackerNews');
-      angularFire(ref.limit(100), $scope, "posts");
-      
-    $scope.posts = [{}];
+  function AppCtrl ($scope, posts, angularFire) {
+      angularFire(posts, $scope, 'posts');
   });
 
 hackerNews.controller('InfoCtrl',
@@ -15,16 +11,16 @@ hackerNews.controller('InfoCtrl',
   });
 
 hackerNews.controller('AddCtrl',
-  function AddCtrl($scope, $location) {
-    $scope.post = {};
+  function AddCtrl($scope, $location, posts) {
+    $scope.post = [{}];
     $scope.add = function () {
-      $scope.posts.push($scope.post);
+      posts.push($scope.post);
       $location.url('/');
     };
   });
 
 hackerNews.controller('EditCtrl',
-  function EditCtrl($scope, $routeParams, $location) {
+  function EditCtrl($scope, $routeParams, $location, posts) {
     $scope.post = $scope.posts[$routeParams.id];
     $scope.edit = function () {
       $scope.posts[$routeParams.id] = $scope.post;
@@ -33,10 +29,11 @@ hackerNews.controller('EditCtrl',
   });
 
 hackerNews.controller('RemoveCtrl',
-  function RemoveCtrl($scope, $routeParams, $location) {
+  function RemoveCtrl($scope, $routeParams, $location, posts) {
     $scope.post = $scope.posts[$routeParams.id];
     $scope.remove = function () {
-      $scope.posts.splice($routeParams.id, 1);
+      //$scope.posts.splice($routeParams.id, 1);
+      //delete $scope.posts[$routeParams.id];
       $location.url('/');
     };
     $scope.back = function () {

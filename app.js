@@ -1,5 +1,9 @@
 /* Declare app level module */
 var hackerNews = angular.module('hackerNews', ['firebase'])
+  .factory('posts', [function() {
+      var posts = new Firebase('https://xyclos.firebaseio.com/hackerNews');
+      return posts;
+  }])
   .config(function($routeProvider) {
     $routeProvider.when('/index', {
       templateUrl: 'partials/index.html'
@@ -19,6 +23,10 @@ var hackerNews = angular.module('hackerNews', ['firebase'])
     .when('/remove/:id', {
       templateUrl: 'partials/remove.html',
       controller: 'RemoveCtrl'
+    })
+    .when('/comments/:id', {
+        templateUrl: 'partials/comments.html',
+        controller: 'CommentCtrl'
     })
     .otherwise({
       redirectTo: '/index'
