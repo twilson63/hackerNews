@@ -4,29 +4,41 @@ var hackerNews = angular.module('hackerNews', ['firebase'])
       var posts = new Firebase('https://xyclos.firebaseio.com/hackerNews');
       return posts;
   }])
+  .factory('users', [function() {
+      var users = new Firebase('https://xyclos.firebaseio.com/');
+      return users;
+  }])
+  .factory('comments', [function() {
+      var comments = new Firebase('https://xyclos.firebaseio.com/comments');
+      return comments;
+  }])
+  .factory('postsComments', [function() {
+      var postsComments = new Firebase('https://xyclos.firebaseio.com/hackerNews/comments');
+      return postsComments;
+  }])
   .config(function($routeProvider) {
     $routeProvider.when('/index', {
       templateUrl: 'partials/index.html'
     })
-    .when('/info/:id', {
-      templateUrl: 'partials/info.html',
-      controller: 'InfoCtrl'
-    })
     .when('/add', {
       templateUrl: 'partials/add.html',
-      controller: 'AddCtrl'
+      controller: 'AddCtrl',
+      authRequired: true
     })
     .when('/edit/:id', {
       templateUrl: 'partials/edit.html',
-      controller: 'EditCtrl'
+      controller: 'EditCtrl',
+      authRequired: true
     })
     .when('/remove/:id', {
       templateUrl: 'partials/remove.html',
-      controller: 'RemoveCtrl'
+      controller: 'RemoveCtrl',
+      authRequired: true
     })
     .when('/comments/:id', {
         templateUrl: 'partials/comments.html',
-        controller: 'CommentCtrl'
+        controller: 'CommentCtrl',
+        authRequired: false
     })
     .otherwise({
       redirectTo: '/index'
@@ -35,12 +47,13 @@ var hackerNews = angular.module('hackerNews', ['firebase'])
   
   hackerNews.filter('shortURL', function () {
       return function (text) {
-          var getLocation = function(href) {
-              var l = document.createElement("a");
-              l.href = href;
-              return l;
-          };
-          var url = getLocation(text);
-          return url.hostname;
+          var matches, 
+            output = "",
+            urls = /\w+:\/\/([\w|\.]+)/;
+          matches = urls.exec(text);
+          
+          if (matches !== null) {output = matches[1];}
+          
+          return output;
       };
   });

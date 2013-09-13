@@ -3,6 +3,9 @@
   <label>title</label>: <input ng-model="post.name">
 </div>
 <div>
-  <label>url</label>: <input ng-model="post.url">
+  <label>url</label>: <input type="url" ng-model="post.url">
+</div>
+<div ng-hide=true>
+  <label>user</label>: <input ng-readonly="true" ng-model="post.createdBy" value="{{user.name}}" placeholder="{{user.name}}">
 </div>
 <input type="submit" value="Submit">

@@ -1,0 +1,27 @@
+<table>
+  <tr>
+    <td>
+      <h3><a ng-href="{{post.url}}">{{post.name}}</a></h3>
+    </td>
+  </tr>
+  <tr ng-repeat="comment in comments | orderBy:'-created':true">
+    <td>
+      <div class="well">
+        <p>{{comment.from}} on {{comment.created | date:'medium'}} Said:</p>
+        <p>{{comment.content.content}}</p>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td ng-hide="!user">
+      <form ng-submit="addComment()">
+        <input ng-model="comment.content" placeholder="comment...">
+        <br /><br />
+        <input class="btn" type="submit" value="add comment">
+      </form>
+    </td>
+    <td ng-show="!user">
+      <p class="alert alert-info">You must be logged in to add comments!</p>
+    </td>
+  </tr>
+</table>
