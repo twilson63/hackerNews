@@ -16,7 +16,7 @@ hackerNews.controller('AppCtrl',
   });
 
 hackerNews.controller('CommentCtrl',
-  function CommentCtrl($scope, $routeParams, posts, comments, postsComments, angularFire) {
+  function CommentCtrl($scope, $routeParams, posts, comments, angularFire) {
     $scope.post = $scope.posts[$routeParams.id];
     $scope.comments = {};
     angularFire(comments, $scope, "comments");
