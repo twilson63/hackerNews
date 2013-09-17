@@ -1,20 +1,28 @@
 /* Declare app level module */
 var hackerNews = angular.module('hackerNews', ['firebase'])
+    .directive('rating', function() {
+         return {
+             restrict: 'A',
+             template: '<span ng-click="ratingValue = ratingValue + 1">&and;</span>' +
+                        '<br />' +
+                       '<span ng-click="ratingValue = ratingValue - 1">&or;</span>',
+             scope: {
+                 ratingValue: '=',
+                 onVote: '&'
+             }
+         }
+     })
   .factory('posts', [function() {
       var posts = new Firebase('https://xyclos.firebaseio.com/hackerNews');
       return posts;
   }])
   .factory('users', [function() {
-      var users = new Firebase('https://xyclos.firebaseio.com/');
+      var users = new Firebase('https://xyclos.firebaseio.com/users');
       return users;
   }])
   .factory('comments', [function() {
       var comments = new Firebase('https://xyclos.firebaseio.com/comments');
       return comments;
-  }])
-  .factory('postsComments', [function() {
-      var postsComments = new Firebase('https://xyclos.firebaseio.com/hackerNews/comments');
-      return postsComments;
   }])
   .config(function($routeProvider) {
     $routeProvider.when('/index', {

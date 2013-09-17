@@ -1,6 +1,7 @@
 <p ng-show="posts.length == 0">There are no posts here!</p>
 <ul class="list-unstyled">
   <li ng-repeat="(id, post) in posts">
+    <!--<div rating rating-value="votes" on-vote="applyVotes(newVotes)"></div>-->
     <a href="{{post.url}}">{{post.name}}</a>
     <span class="url">
       <small>({{post.url | shortURL}})</small>

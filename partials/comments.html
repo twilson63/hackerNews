@@ -4,11 +4,11 @@
       <h3><a ng-href="{{post.url}}">{{post.name}}</a></h3>
     </td>
   </tr>
-  <tr ng-repeat="comment in comments | orderBy:'-created':true">
+  <tr ng-repeat="comment in post.comments | orderBy:'created':true">
     <td>
       <div class="well">
         <p>{{comment.from}} on {{comment.created | date:'medium'}} Said:</p>
-        <p>{{comment.content.content}}</p>
+        <p>{{comment.content}}</p>
       </div>
     </td>
   </tr>
