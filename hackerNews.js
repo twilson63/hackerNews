@@ -9,6 +9,23 @@ angular.module('App', ['firebase'])
       .when('/posts/:post/comments/:id/edit', {controller: 'EditCommentCtrl', templateUrl: '/app/templates/comments/form.html'});
       
     $locationProvider.html5Mode(true);
+  })
+  .constant('fburl', 'https://chstechnews.firebaseio.com')
+  .run(function($rootScope, angularFireAuth, fburl) {
+    var ref = new Firebase(fburl);
+    angularFireAuth.initialize(ref, {scope: $rootScope, name: "user"});
+    $rootScope.login = function() {
+      angularFireAuth.login("persona");
+    };
+    $rootScope.logout = function() {
+      angularFireAuth.logout();
+    };
+    // $rootScope.$on("angularFireAuth:login", function(evt, user) {
+    //   console.log(user);
+    // });
+    $rootScope.isAuthor = function(email) {
+      return $rootScope.user ? $rootScope.user.email === email : false;
+    };
   });
 angular.module('App')
   .controller('CommentsCtrl', function($scope, angularFire, $location, $routeParams) {
@@ -56,6 +73,7 @@ angular.module('App')
     $scope.save = function() {
       var ref = new Firebase('https://chstechnews.firebaseio.com/posts');
       angularFire(ref, $scope, 'posts');
+      $scope.comment.email = $scope.user.email;
       $scope.post.comments.push($scope.comment);
       $location.path('/posts/' + $scope.postIndex + '/comments');
     };
@@ -74,8 +92,8 @@ angular.module('App')
     };
   });
 angular.module('App')
-  .controller('MainCtrl', function($scope, angularFire) {
-    var ref = new Firebase('https://chstechnews.firebaseio.com/posts');
+  .controller('MainCtrl', function($scope, angularFire, fburl) {
+    var ref = new Firebase(fburl + '/posts');
     angularFire(ref, $scope, 'posts');
   });
 angular.module('App')
@@ -84,6 +102,7 @@ angular.module('App')
       var ref = new Firebase('https://chstechnews.firebaseio.com/posts');
       angularFire(ref, $scope, 'posts');
       if (!$scope.posts) { $scope.posts = []; }
+      $scope.post.email = $scope.user.email;
       $scope.posts.push($scope.post);
       $location.path('/');
     };

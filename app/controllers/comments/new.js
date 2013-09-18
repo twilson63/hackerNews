@@ -13,6 +13,7 @@ angular.module('App')
     $scope.save = function() {
       var ref = new Firebase('https://chstechnews.firebaseio.com/posts');
       angularFire(ref, $scope, 'posts');
+      $scope.comment.email = $scope.user.email;
       $scope.post.comments.push($scope.comment);
       $location.path('/posts/' + $scope.postIndex + '/comments');
     };
