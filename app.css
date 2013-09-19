@@ -1,3 +1,13 @@
+body {
+  background: url('img/background.png');
+}
+
+.content {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
 .ng-enter {
   -webkit-transition: 1s;
   transition: 1s;

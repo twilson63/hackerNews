@@ -2,13 +2,14 @@
 <html lang="en" ng-app="App">
 <head>
   <meta charset="utf-8">
-  <title>Hacker News</title>
+  <title>CHS Tech News</title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
   <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
+     <a class="navbar-brand" href="#">CHS Tech News</a>
     <div class="pull-right">
       <span ng-show="user">
         <a class="btn btn-warning navbar-btn" ng-click="logout()">
@@ -22,9 +23,6 @@
     </span>
     </div>
   </nav>
-  <div class="jumbotron">
-    <h1><center>CHS Tech News</center></h1>
-  </div>
   <div ng-view></div>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>

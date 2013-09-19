@@ -1,5 +1,6 @@
 angular.module('App')
-  .controller('NewCommentCtrl', function($scope, angularFire, $location, $routeParams) {
+  .controller('NewCommentCtrl', function($scope, angularFire, 
+    $location, $routeParams, md5) {
     $scope.postIndex = $routeParams.id;
     var ref = new Firebase('https://chstechnews.firebaseio.com/posts');
     angularFire(ref, $scope, 'posts');
@@ -14,6 +15,8 @@ angular.module('App')
       var ref = new Firebase('https://chstechnews.firebaseio.com/posts');
       angularFire(ref, $scope, 'posts');
       $scope.comment.email = $scope.user.email;
+      $scope.comment.gravatar = md5.createHash($scope.user.email);
+      $scope.comment.createdAt = new Date();
       $scope.post.comments.push($scope.comment);
       $location.path('/posts/' + $scope.postIndex + '/comments');
     };

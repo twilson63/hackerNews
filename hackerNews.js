@@ -45,7 +45,22 @@ angular.module('App')
     };
   });
 angular.module('App')
-  .controller('NewCommentCtrl', function($scope, angularFire, $location, $routeParams) {
+  .controller('CommentsCtrl', function($scope, angularFire, $location, $routeParams) {
+    $scope.postIndex = $routeParams.id;
+    var ref = new Firebase('https://chstechnews.firebaseio.com/posts');
+    angularFire(ref, $scope, 'posts');
+    $scope.$watch('posts', function() {
+      if($scope.posts) { 
+        $scope.post = $scope.posts[$scope.postIndex];
+      }
+    });
+    $scope.back = function() {
+      $location.path('/');
+    };
+  });
+angular.module('App')
+  .controller('NewCommentCtrl', function($scope, angularFire, 
+    $location, $routeParams, md5) {
     $scope.postIndex = $routeParams.id;
     var ref = new Firebase('https://chstechnews.firebaseio.com/posts');
     angularFire(ref, $scope, 'posts');
@@ -60,6 +75,8 @@ angular.module('App')
       var ref = new Firebase('https://chstechnews.firebaseio.com/posts');
       angularFire(ref, $scope, 'posts');
       $scope.comment.email = $scope.user.email;
+      $scope.comment.gravatar = md5.createHash($scope.user.email);
+      $scope.comment.createdAt = new Date();
       $scope.post.comments.push($scope.comment);
       $location.path('/posts/' + $scope.postIndex + '/comments');
     };
@@ -83,12 +100,16 @@ angular.module('App')
     angularFire(ref, $scope, 'posts');
   });
 angular.module('App')
-  .controller('NewCtrl', function($scope, angularFire, $location) {
+  .controller('NewCtrl', function($scope, angularFire, 
+     $location, md5) {
+    console.log($scope.user);
     $scope.save = function() {
       var ref = new Firebase('https://chstechnews.firebaseio.com/posts');
       angularFire(ref, $scope, 'posts');
       if (!$scope.posts) { $scope.posts = []; }
       $scope.post.email = $scope.user.email;
+      $scope.post.createdAt = new Date();
+      $scope.post.gravatar = md5.createHash($scope.user.email);
       $scope.posts.push($scope.post);
       $location.path('/');
     };
